@@ -1,0 +1,31 @@
+$date
+	Sat Mar 25 18:54:17 2017
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module test $end
+$var wire 1 ! out $end
+$var reg 1 " a $end
+$var reg 1 # b $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+x#
+x"
+x!
+$end
+#5
+0!
+0#
+0"
+#10
+1"
+#15
+1!
+1#
+#25
