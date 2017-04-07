@@ -4,45 +4,29 @@ module test;
 
   wire [15:0] bus;
 
-  reg clk, enable0, latch0, enable1, latch1;
-  reg [15:0] data_push0 = 16'h5B4E;
-  reg [3:0] data_push1 = 4'hA;
+  reg clk, enable, latch;
+  reg [15:0] data_push = 16'hABCD;
 
-  Register_16Bit_Buffered regA(bus, data_push0, enable0, latch0, clk);
-  Register_4Bit_Buffered regB(bus[3:0], data_push1, enable1, latch1, clk);
+  Register_Buffered #(8) regA(bus[7:0], data_push, enable, latch, clk);
 
   initial begin
 
     $dumpvars(4, test);
 
     clk = 0;
-    enable0 = 0;
-    latch0 = 0;
-    enable1 = 0;
-    latch1 = 0;
+    enable = 0;
+    latch = 0;
 
     #11;
-    latch0 = 1;
+    latch = 1;
     #6;
-    latch0 = 0;
+    latch = 0;
 
     #20;
-    enable0 = 1;
+    enable = 1;
     #6;
-    enable0 = 0;
+    enable = 0;
 
-
-
-
-    #11;
-    latch1 = 1;
-    #6;
-    latch1 = 0;
-
-    #20;
-    enable1 = 1;
-    #6;
-    enable1 = 0;
 
     #100;
 
