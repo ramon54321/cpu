@@ -28,56 +28,26 @@ module Register_Buffered(
   end
 endmodule
 
-module Register_4Bit_Buffered(
-    output [3:0] data_out,
-    input [3:0] data_in,
+module Register_Counter_Buffered(
+    output [width - 1:0] data_out,
+    input [width - 1:0] data_in,
     input enable,
     input latch,
+    input increment,
     input clk);
 
-  reg [3:0] data_internal = 4'hX;
+  parameter width = 4;
 
-  assign data_out = (enable == 1) ? data_internal : 4'hZ;
+  reg [width - 1:0] data_internal = {(width) {1'hX}};
+
+  assign data_out = (enable == 1) ? data_internal : {(width) {1'hZ}};
 
   always @ (posedge clk) begin
     if(latch) begin
       data_internal = data_in;
     end
-  end
-endmodule
-
-module Register_8Bit_Buffered(
-    output [7:0] data_out,
-    input [7:0] data_in,
-    input enable,
-    input latch,
-    input clk);
-
-  reg [7:0] data_internal = 8'hXX;
-
-  assign data_out = (enable == 1) ? data_internal : 8'hZZ;
-
-  always @ (posedge clk) begin
-    if(latch) begin
-      data_internal = data_in;
-    end
-  end
-endmodule
-
-module Register_16Bit_Buffered(
-    output [15:0] data_out,
-    input [15:0] data_in,
-    input enable,
-    input latch,
-    input clk);
-
-  reg [15:0] data_internal = 16'hXXXX;
-
-  assign data_out = (enable == 1) ? data_internal : 16'hZZZZ;
-
-  always @ (posedge clk) begin
-    if(latch) begin
-      data_internal = data_in;
+    if(!latch && increment) begin
+      data_internal = data_internal + 1;
     end
   end
 endmodule
